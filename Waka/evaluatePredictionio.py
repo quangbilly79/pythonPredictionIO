@@ -8,8 +8,9 @@ spark = SparkSession.builder.getOrCreate()
 
 
 sqlUserRead = """
-select user_id, collect_set(cast(content_id as string)) as content_id from waka.waka_pd_fact_reader
-where  data_date_key > 20220631
+select user_id, collect_set(cast(content_id as string)) as content_id from waka.waka_pd_fact_reader as fr 
+join waka.content_dim as cd on fr.content_id = cd. content_id
+where  data_date_key > 20220631 and data_date_key <= 20220731 and cd.status = "ACT"
 group by user_id
 order by user_id
 """
@@ -24,6 +25,7 @@ order by user_id
 dfAllUserid = spark.sql(sqlUserRead).select(col("user_id")).orderBy(col("user_id"))
 listAllUserId = dfAllUserid.collect()
 dictUserRecommend = {} # Dict chua' userId va` list item id cua? cac' item dc recommend cho user do'
+print("complete 1 step")
 for row in listAllUserId:
     numOfReturnRecom = 4
     returnQuery = engine_client.send_query({"user": str(row["user_id"]), "num": numOfReturnRecom})
@@ -34,7 +36,7 @@ for row in listAllUserId:
     # [24671, 36986, ...]
     dictUserRecommend.update({str(row["user_id"]): list(listItem)})
     # {1: [24671, 36986,...], 2: [23245, ...], ...}
-
+print("complete get result")
 with open('userRecommendPredictionIO.txt', 'w+') as f:
     for key, value in dictUserRecommend.items():
         f.write('%s:%s\n' % (key, value))
@@ -100,10 +102,15 @@ MP = totalPrecision / len(dictUserRead) * 100
 with open('resultPredictionIO.txt', 'w+') as f:
     f.write("Mean Average Precision: "+ str(MAP)+"%" + "\n" + "Mean Precision: "+ str(MP)+"%")
 
-#MAP: 4.93% => Coi nhu o? muc trung binh` so vs cac' Doc tren mang.
-#MP: 25%
+# train set 1 month
+# Mean Average Precision: 4.952452612704922%
+# Mean Precision: 6.3444544057377055%
 # for
 # "eventNames": [
 #     "read", "wishlist", "search", "rate"
 # ],
 # "blacklistEvents": ["wishlist", "read"]
+
+# train set 6 month
+# Mean Average Precision: 5.447537781762297%
+# Mean Precision: 6.957607581967213%

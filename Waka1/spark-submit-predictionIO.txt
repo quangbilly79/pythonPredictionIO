@@ -1,0 +1,43 @@
+#!/bin/bash
+spark-submit ImportRateSpark.py \
+     --master yarn \
+     --deploy-mode cluster \
+     --driver-memory 6g \
+     --executor-memory 6g \
+     --executor-cores 6; \
+spark-submit ImportReadSpark.py \
+     --master yarn \
+     --deploy-mode cluster \
+     --driver-memory 6g \
+     --executor-memory 6g \
+     --executor-cores 6; \
+#spark-submit ImportSetSpark.py \
+#     --master yarn \
+#     --deploy-mode cluster \
+#     --driver-memory 6g \
+#     --executor-memory 6g \
+#     --executor-cores 6;
+spark-submit  \
+     --master yarn \
+     --deploy-mode client \
+     --driver-memory 6g \
+     --executor-memory 2g \
+     --driver-cores 6 \
+     evaluatePredictionio.py \
+     > outputPredictionIO.txt 1>&1;
+pio import --appid 4 --input importEventJson/
+pio train -- --driver-memory 4g --executor-memory 4g
+
+Client:
+
+Driver runs on a dedicated server (Master node) inside a dedicated process. This means it has all available resources at it's disposal to execute work.
+Driver opens up a dedicated Netty HTTP server and distributes the JAR files specified to all Worker nodes (big advantage).
+Because the Master node has dedicated resources of it's own, you don't need to "spend" worker resources for the Driver program.
+
+Cluster:
+
+Driver runs on one of the cluster's Worker nodes. The worker is chosen by the Master leader
+Driver runs as a dedicated, standalone process inside the Worker.
+Driver programs takes up at least 1 core and a dedicated amount of memory from one of the workers (this can be configured).
+
+8s_RfMMqwMj5dfrtivDGJWrxarHeKkqWRw7iCf8kERpdkEbPd_b1gF9jdhmu_NMO

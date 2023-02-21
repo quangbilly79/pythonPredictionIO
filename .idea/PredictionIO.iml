@@ -6,5 +6,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Harness" />
     <orderEntry type="module" module-name="recombee" />
+    <orderEntry type="module" module-name="import_data_v2" />
+    <orderEntry type="module" module-name="Vega" />
   </component>
 </module>

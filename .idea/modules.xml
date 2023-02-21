@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../Harness/.idea/Harness.iml" filepath="$PROJECT_DIR$/../Harness/.idea/Harness.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/PredictionIO.iml" filepath="$PROJECT_DIR$/.idea/PredictionIO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Vega/.idea/Vega.iml" filepath="$PROJECT_DIR$/../Vega/.idea/Vega.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../import_data_v2/.idea/import_data_v2.iml" filepath="$PROJECT_DIR$/../import_data_v2/.idea/import_data_v2.iml" />
       <module fileurl="file://$PROJECT_DIR$/../recombee/.idea/recombee.iml" filepath="$PROJECT_DIR$/../recombee/.idea/recombee.iml" />
     </modules>
   </component>
