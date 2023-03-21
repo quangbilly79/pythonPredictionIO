@@ -1,21 +1,26 @@
-# arcs = [(1,13), (16,12), (13,16), (12,17), (25, 22), (17, 5)]
-# route = [arcs[0][0]]
-#
-# for i in range(len(arcs)):
-#     for j in range(i+1, len(arcs)):
-#         if arcs[i][1] == arcs[j][0]:
-#             route.append(arcs[j][0])
-#             route.append(arcs[j][1])
-#             i = j
-#             break
-#
-# print(route)
+from pyspark.sql.functions import *
+from pyspark.sql import SparkSession
 
-# class test:
-#     def testFunction(self,s:str):
-#         print(self)
-#         return s
-#
-# print(test.testFunction("foo", "x")) # x
+spark = SparkSession.builder.getOrCreate()
 
-print(2, "3")
+# define the list of item names
+item_list = ["asset_min", "hpc_max", "off_median"]
+
+# create a Spark DataFrame from the input table
+df = spark.createDataFrame([
+    ("hpc_max", 0.25, "2023-03-01T17:20:00.000+0000"),
+    ("asset_min", 0.34, "2023-03-01T17:20:00.000+0000"),
+    ("off_median", 0.30, "2023-03-01T17:30:00.000+0000"),
+    ("hpc_max", 0.54, "2023-03-01T17:30:00.000+0000"),
+    ("asset_min", 0.32, "2023-03-01T17:35:00.000+0000"),
+    ("off_median", 0.67, "2023-03-01T17:20:00.000+0000"),
+    ("asset_min", 0.54, "2023-03-01T17:30:00.000+0000"),
+    ("off_median", 0.32, "2023-03-01T17:35:00.000+0000"),
+    ("hpc_max", 0.67, "2023-03-01T17:35:00.000+0000")
+], ["item_name", "item_value", "timestamp"])
+
+df.show()
+
+
+grouped_data = df.groupBy('timestamp').agg(collect_list(struct('item_name', 'item_value')).alias('items'))
+grouped_data.show()

@@ -5,9 +5,10 @@
   "engineFactory": "com.actionml.RecommendationEngine",
   "datasource": {
     "params" : {
-      "name": "sample-handmade-data.txt",
-      "appName": "handmade",
-      "eventNames": ["purchase", "view"]
+      "name": "waka_book_2023_ur",
+      "appName": "waka_book_2023_ur",
+      "eventNames": ["read", "rate", "wishlist", "search"],
+      "minEventsPerUser": 3
     }
   },
   "sparkConf": {
@@ -22,13 +23,24 @@
       "comment": "simplest setup where all values are default, popularity based backfill, must add eventsNames",
       "name": "ur",
       "params": {
-        "appName": "handmade",
-        "indexName": "urindex",
+        "appName": "waka_book_2023_ur",
+        "indexName": "waka_book_2023_ur",
         "typeName": "items",
         "comment": "must have data for the first event or the model will not build, other events are optional",
-        "eventNames": ["purchase", "view"]
+        "indicators": [
+          {
+            "name": "read"
+          },{
+            "name": "rate"
+          },{
+            "name": "wishlist"
+          },{
+            "name": "search"
+          }
+        ],
+		"blacklistEvents": ["read"],
+        "num": 4
       }
     }
   ]
 }
-

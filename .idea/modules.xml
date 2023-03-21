@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../Harness/.idea/Harness.iml" filepath="$PROJECT_DIR$/../Harness/.idea/Harness.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/PredictionIO.iml" filepath="$PROJECT_DIR$/.idea/PredictionIO.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Vega/.idea/Vega.iml" filepath="$PROJECT_DIR$/../Vega/.idea/Vega.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../import_data_v2/.idea/import_data_v2.iml" filepath="$PROJECT_DIR$/../import_data_v2/.idea/import_data_v2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../recombee/.idea/recombee.iml" filepath="$PROJECT_DIR$/../recombee/.idea/recombee.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../vega-data-recommendations/.idea/vega-data-recommendations.iml" filepath="$PROJECT_DIR$/../vega-data-recommendations/.idea/vega-data-recommendations.iml" />
     </modules>
   </component>
 </project>
